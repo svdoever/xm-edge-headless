@@ -1,5 +1,5 @@
-@import "@sass/abstracts/vars";
-@import "@sass/abstracts/mixins";
+@import '@sass/abstracts/vars';
+@import '@sass/abstracts/mixins';
 
 .title-row-box {
     @include border-basic();
@@ -9,7 +9,7 @@
     margin: 0;
     padding: 0;
     background: $container-title-row-bg;
-    >.component-content {
+    > .component-content {
         @include wrapper();
         .title {
             display: inline-block;
@@ -27,7 +27,10 @@
         }
         .rich-text {
             margin: 0;
-            h1, h2, h3, h4 {
+            h1,
+            h2,
+            h3,
+            h4 {
                 margin: 0;
                 padding: 0;
             }

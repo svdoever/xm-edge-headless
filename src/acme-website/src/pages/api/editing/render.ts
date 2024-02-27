@@ -15,7 +15,7 @@ import { EditingRenderMiddleware } from '@sitecore-jss/sitecore-jss-nextjs/editi
  */
 
 /**
- * For Vercel deployments: 
+ * For Vercel deployments:
  * if you experience crashes in editing, you may need to use VercelEditingDataCache or a custom Redis data cache implementation with EditingRenderMiddleware
  * Please refer to documentation for a detailed guide.
  */
@@ -23,12 +23,12 @@ import { EditingRenderMiddleware } from '@sitecore-jss/sitecore-jss-nextjs/editi
 // Bump body size limit (1mb by default) and disable response limit for Sitecore editor payloads
 // See https://nextjs.org/docs/api-routes/request-helpers#custom-config
 export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '2mb',
+    api: {
+        bodyParser: {
+            sizeLimit: '2mb',
+        },
+        responseLimit: false,
     },
-    responseLimit: false,
-  },
 };
 
 // Wire up the EditingRenderMiddleware handler

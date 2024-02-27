@@ -11,15 +11,12 @@ import * as plugins from 'temp/site-resolver-plugins';
 */
 
 export interface SiteResolverPlugin {
-  /**
-   * A function which will be called during sites collection
-   */
-  exec(sites: SiteInfo[]): SiteInfo[];
+    /**
+     * A function which will be called during sites collection
+     */
+    exec(sites: SiteInfo[]): SiteInfo[];
 }
 
-const sites = (Object.values(plugins) as SiteResolverPlugin[]).reduce(
-  (sites, plugin) => plugin.exec(sites),
-  []
-);
+const sites = (Object.values(plugins) as SiteResolverPlugin[]).reduce((sites, plugin) => plugin.exec(sites), []);
 
 export const siteResolver = new SiteResolver(sites);

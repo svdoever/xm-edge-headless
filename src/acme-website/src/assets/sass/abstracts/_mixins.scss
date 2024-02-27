@@ -1,4 +1,4 @@
-@import "vars";
+@import 'vars';
 
 /* breakpoints */
 
@@ -12,7 +12,7 @@ $break-mobile-large: 992px;
 }
 @mixin clearfix {
     &:after {
-        content: "";
+        content: '';
         display: table;
         clear: both;
     }
@@ -20,7 +20,7 @@ $break-mobile-large: 992px;
 @mixin headings($from: 1, $to: 6) {
     @for $i from $from through $to {
         h#{$i} {
-            @content
+            @content;
         }
     }
 }
@@ -28,16 +28,15 @@ $break-mobile-large: 992px;
     font-size: ($sizeValue * 10) + px;
     font-size: $sizeValue + rem;
 }
-    @mixin proxima-font($weight:semibold) {
-        @if($weight==semibold) {
-            font-family: "ProximaNova-Semibold", arial, helvetica, sans-serif;
-        }
-        @else if($weight==light) {
-            font-family: "ProximaNova-Light", arial, helvetica, sans-serif;
-        }
+@mixin proxima-font($weight: semibold) {
+    @if ($weight==semibold) {
+        font-family: 'ProximaNova-Semibold', arial, helvetica, sans-serif;
+    } @else if($weight==light) {
+        font-family: 'ProximaNova-Light', arial, helvetica, sans-serif;
     }
+}
 @mixin opensans-font-stack() {
-    font-family: "Open Sans", Helvetica, Verdana, Tahoma, sans-serif;
+    font-family: 'Open Sans', Helvetica, Verdana, Tahoma, sans-serif;
 }
 @mixin loading-gif() {
     background-image: url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiIgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiBmaWxsPSJibGFjayI+DQogIDxwYXRoICBvcGFjaXR5PSIuMjUiIGQ9Ik0xNiAwIEExNiAxNiAwIDAgMCAxNiAzMiBBMTYgMTYgMCAwIDAgMTYgMCBNMTYgNCBBMTIgMTIgMCAwIDEgMTYgMjggQTEyIDEyIDAgMCAxIDE2IDQiLz4NCiAgPHBhdGggZmlsbD0nIzFhODBiNicgZD0iTTE2IDAgQTE2IDE2IDAgMCAxIDMyIDE2IEwyOCAxNiBBMTIgMTIgMCAwIDAgMTYgNHoiPg0KICAgIDxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZU5hbWU9InRyYW5zZm9ybSIgdHlwZT0icm90YXRlIiBmcm9tPSIwIDE2IDE2IiB0bz0iMzYwIDE2IDE2IiBkdXI9IjAuOHMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPg0KICA8L3BhdGg+DQo8L3N2Zz4NCg==);
@@ -49,53 +48,47 @@ $break-mobile-large: 992px;
         @media only screen and (max-width: $break-mobile) {
             @content;
         }
-    }
-    @else if $media==mobile-horizontal {
+    } @else if $media==mobile-horizontal {
         @media only screen and (max-width: $break-mobile-horizontal - 1) {
             @content;
         }
-    }
-    @else if $media==mobile-large {
+    } @else if $media==mobile-large {
         @media only screen and (max-width: $break-mobile-large) {
             @content;
         }
-    }
-    @else if $media==tablet {
+    } @else if $media==tablet {
         @media only screen and (min-width: $break-mobile + 1) and (max-width: $break-desktop - 1) {
             @content;
         }
-    }
-    @else if $media==all-mobile {
+    } @else if $media==all-mobile {
         @media only screen and (max-width: $break-desktop - 1) {
             @content;
         }
-    }
-    @else if $media==desktop {
+    } @else if $media==desktop {
         @media only screen and (min-width: $break-desktop) {
             @content;
         }
     }
 }
-@mixin border-basic($position:all, $border-color:$border-gray, $border-width:1px) {
-    @if($position!=all) {
+@mixin border-basic($position: all, $border-color: $border-gray, $border-width: 1px) {
+    @if ($position!=all) {
         border-#{$position}-width: $border-width;
         border-#{$position}-style: solid;
         border-#{$position}-color: $border-color;
-    }
-    @else {
+    } @else {
         border-width: $border-width;
-            border-style: solid;
-            border-color: $border-color;
+        border-style: solid;
+        border-color: $border-color;
     }
 }
-@mixin fixed-bg($pos, $min-height:240px) {
+@mixin fixed-bg($pos, $min-height: 240px) {
     background-position: $pos;
     background-attachment: fixed;
     min-height: $min-height;
 }
 @mixin linear-gradient($direction, $color-stops...) {
     // Direction has been omitted and happens to be a color-stop
-    @if is-direction($direction)==false {
+    @if is-direction($direction) ==false {
         $color-stops: $direction, $color-stops;
         $direction: 180deg;
     }
@@ -104,18 +97,18 @@ $break-mobile-large: 992px;
     background: linear-gradient($direction, $color-stops);
 }
 @mixin default-link-button {
-  @include border-basic();
-  @include font-size(1.2);
-  display: inline-block;
-  vertical-align: middle;
-  box-sizing: border-box;
-  margin: 5px 0;
-  padding: 10px 15px;
-  text-align: center;
-  text-decoration: none;
-  font-weight: bold;
-  &:hover {
-      color: $text-basic;
-      background: $bg-light-gray;
-  }
+    @include border-basic();
+    @include font-size(1.2);
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    margin: 5px 0;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+    &:hover {
+        color: $text-basic;
+        background: $bg-light-gray;
+    }
 }

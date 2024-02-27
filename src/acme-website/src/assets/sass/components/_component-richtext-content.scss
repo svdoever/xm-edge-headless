@@ -1,7 +1,8 @@
-@import "@sass/abstracts/vars";
-@import "@sass/abstracts/mixins";
+@import '@sass/abstracts/vars';
+@import '@sass/abstracts/mixins';
 
-.content, .rich-text {
+.content,
+.rich-text {
     border: $rich-content-border;
     line-height: 1.5;
     font-size: 12px;
@@ -9,11 +10,11 @@
     * {
         max-width: 100%;
     }
-    @import "@sass/base/richtext";
+    @import '@sass/base/richtext';
 }
-.rich-text  {
-    @import "@sass/variants/rich-text";
+.rich-text {
+    @import '@sass/variants/rich-text';
 }
 .content {
-    @import "@sass/variants/page-content";
+    @import '@sass/variants/page-content';
 }

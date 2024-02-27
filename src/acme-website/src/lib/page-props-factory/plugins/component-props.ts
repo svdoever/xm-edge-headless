@@ -5,48 +5,46 @@ import { moduleFactory } from 'temp/componentBuilder';
 import { Plugin, isServerSidePropsContext } from '..';
 
 class ComponentPropsPlugin implements Plugin {
-  private componentPropsService: ComponentPropsService;
+    private componentPropsService: ComponentPropsService;
 
-  order = 2;
+    order = 2;
 
-  constructor() {
-    this.componentPropsService = new ComponentPropsService();
-  }
-
-  async exec(props: SitecorePageProps, context: GetServerSidePropsContext | GetStaticPropsContext) {
-    if (!props.layoutData.sitecore.route) return props;
-
-    // Retrieve component props using side-effects defined on components level
-    if (isServerSidePropsContext(context)) {
-      props.componentProps = await this.componentPropsService.fetchServerSideComponentProps({
-        layoutData: props.layoutData,
-        context,
-        moduleFactory,
-      });
-    } else {
-      props.componentProps = await this.componentPropsService.fetchStaticComponentProps({
-        layoutData: props.layoutData,
-        context,
-        moduleFactory,
-      });
+    constructor() {
+        this.componentPropsService = new ComponentPropsService();
     }
 
-    const errors = Object.keys(props.componentProps)
-      .map(id => {
-        const component = props.componentProps[id] as ComponentPropsError;
+    async exec(props: SitecorePageProps, context: GetServerSidePropsContext | GetStaticPropsContext) {
+        if (!props.layoutData.sitecore.route) return props;
 
-        return component.error
-          ? `\nUnable to get component props for ${component.componentName} (${id}): ${component.error}`
-          : '';
-      })
-      .join('');
+        // Retrieve component props using side-effects defined on components level
+        if (isServerSidePropsContext(context)) {
+            props.componentProps = await this.componentPropsService.fetchServerSideComponentProps({
+                layoutData: props.layoutData,
+                context,
+                moduleFactory,
+            });
+        } else {
+            props.componentProps = await this.componentPropsService.fetchStaticComponentProps({
+                layoutData: props.layoutData,
+                context,
+                moduleFactory,
+            });
+        }
 
-    if (errors.length) {
-      throw new Error(errors);
+        const errors = Object.keys(props.componentProps)
+            .map((id) => {
+                const component = props.componentProps[id] as ComponentPropsError;
+
+                return component.error ? `\nUnable to get component props for ${component.componentName} (${id}): ${component.error}` : '';
+            })
+            .join('');
+
+        if (errors.length) {
+            throw new Error(errors);
+        }
+
+        return props;
     }
-
-    return props;
-  }
 }
 
 export const componentPropsPlugin = new ComponentPropsPlugin();

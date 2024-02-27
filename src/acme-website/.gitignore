@@ -21,6 +21,8 @@
 # local env files
 .env.local
 .env.*.local
+.env.edit
+.env.prod
 
 # Log files
 *.log*

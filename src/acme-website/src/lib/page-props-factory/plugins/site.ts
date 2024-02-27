@@ -5,16 +5,16 @@ import { siteResolver } from 'lib/site-resolver';
 import config from 'temp/config';
 
 class SitePlugin implements Plugin {
-  order = 0;
+    order = 0;
 
-  async exec(props: SitecorePageProps, context: GetServerSidePropsContext | GetStaticPropsContext) {
-    if (context.preview) return props;
+    async exec(props: SitecorePageProps, context: GetServerSidePropsContext | GetStaticPropsContext) {
+        if (context.preview) return props;
 
-    // Resolve site by name
-    props.site = siteResolver.getByName(config.sitecoreSiteName);
+        // Resolve site by name
+        props.site = siteResolver.getByName(config.sitecoreSiteName);
 
-    return props;
-  }
+        return props;
+    }
 }
 
 export const sitePlugin = new SitePlugin();

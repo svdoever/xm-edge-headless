@@ -1,15 +1,15 @@
-@import "@sass/abstracts/vars";
-@import "@sass/abstracts/mixins";
+@import '@sass/abstracts/vars';
+@import '@sass/abstracts/mixins';
 
 .navigation.navigation-sidebar {
     a {
         text-decoration: none;
     }
-    nav>ul {
+    nav > ul {
         .rel-level1 {
-            >.navigation-title {
+            > .navigation-title {
                 margin-bottom: 0;
-                >a {
+                > a {
                     padding: 5px 10px;
                     display: block;
                     position: relative;
@@ -17,7 +17,7 @@
                     margin-right: 0;
                 }
             }
-            >ul {
+            > ul {
                 margin-left: $small-margin;
                 margin-top: $extrasmall-margin;
             }
