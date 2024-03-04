@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentParams, ComponentRendering } from '@sitecore-jss/sitecore-jss-nextjs';
-import { Image as JssImage, Link as JssLink, ImageField, Field, LinkField, Text, useSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
+import { Image as JssImage, Link as JssLink, ImageField, Field, LinkField, Text, DateField, useSitecoreContext } from '@sitecore-jss/sitecore-jss-nextjs';
 
 interface ComponentProps {
     rendering: ComponentRendering;
@@ -17,17 +17,21 @@ interface BlogCardProps extends ComponentProps {
     };
 }
 
-interface BlogCardSimpleUIProps {
-    imgSrc?: string;
-    imgAlt?: string;
-    articleDate?: string;
-    title?: string;
-    summary?: string;
-    link?: string;
-}
+export const Simple: (props: BlogCardProps) => JSX.Element = (props: BlogCardProps) => {
+    const { sitecoreContext } = useSitecoreContext();
+    const editMode = sitecoreContext.pageEditing || sitecoreContext.siteEditing;
+    const viewMode = !editMode;
 
-export const BlogCardSimpleUI: React.FC<BlogCardSimpleUIProps> = ({ imgSrc, imgAlt, articleDate, title, summary, link }) => {
-    const titleJsx = <h3 className="mt-0.5 text-lg text-gray-900">{title}</h3>;
+    if (!props.fields) {
+        return <div>No datasource configured</div>;
+    }
+
+    const dateString = props.fields.articleDate?.value?.toString();
+    const dateDisplayString = (new Date(dateString))?.toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const link = props.fields.link?.value?.href;
+
+    const titleJsx = <Text tag="h3" className="mt-0.5 text-lg text-gray-900" field={props.fields.title} />;
 
     return (
         <article
@@ -38,36 +42,17 @@ export const BlogCardSimpleUI: React.FC<BlogCardSimpleUIProps> = ({ imgSrc, imgA
                 }
             }}
         >
-            {imgSrc && <img alt={imgAlt} src={imgSrc} className="h-56 w-full object-cover" />}
+            <JssImage className="h-56 w-full object-cover" field={props.fields.image} />
             <div className="bg-white p-4 sm:p-6">
-                {articleDate && (
-                    <time dateTime={articleDate} className="block text-xs text-gray-500">
-                        {new Date(articleDate).toLocaleDateString(undefined, { day: 'numeric', month: 'long', year: 'numeric' })}
+                {viewMode && dateString && (
+                    <time dateTime={dateString} className="block text-xs text-gray-500">
+                        {dateDisplayString}
                     </time>
                 )}
 
-                {link ? <a href={link}>{titleJsx}</a> : <>{titleJsx}</>}
-                {summary && <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">{summary}</p>}
+                {editMode ? <JssLink field={props.fields.link}>{titleJsx}</JssLink> : <>{titleJsx}</>}
+                <Text tag="p" className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500" field={props.fields.summary} />
             </div>
         </article>
-    );
-};
-
-export const Simple: (props: BlogCardProps) => JSX.Element = (props: BlogCardProps) => {
-    if (!props.fields) {
-        return <div>No datasource configured</div>;
-    }
-
-    const { image, articleDate, title, summary, link } = props.fields;
-
-    return (
-        <BlogCardSimpleUI
-            imgSrc={image?.value?.src}
-            imgAlt={image?.value?.alt as string | undefined}
-            articleDate={articleDate?.value?.toString()}
-            title={title?.value}
-            summary={summary?.value}
-            link={link?.value?.href}
-        />
     );
 };
